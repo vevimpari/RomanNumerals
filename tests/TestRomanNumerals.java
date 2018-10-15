@@ -40,6 +40,27 @@ public class TestRomanNumerals {
 	}
 	
 	@Test
+	public void romanNumerals_stringIsValid_repeatLL() {
+		RomanNumerals rn = new RomanNumerals();		
+		int num = rn.convertToInteger("LL");
+		assertEquals("String is invalid, L can't, should return 0", 0, num);
+	}
+	
+	@Test
+	public void romanNumerals_stringIsValid_repeatVV() {
+		RomanNumerals rn = new RomanNumerals();		
+		int num = rn.convertToInteger("VV");
+		assertEquals("String is invalid, V can't be repeated, should return 0", 0, num);
+	}
+	
+	@Test
+	public void romanNumerals_stringIsValid_repeatDD() {
+		RomanNumerals rn = new RomanNumerals();		
+		int num = rn.convertToInteger("DD");
+		assertEquals("String is invalid, D can't be repeated, should return 0", 0, num);
+	}
+	
+	@Test
 	public void romanNumerals_testSingleCharacters() {
 		RomanNumerals rn = new RomanNumerals();
 		
@@ -121,5 +142,18 @@ public class TestRomanNumerals {
 		int num = rn.convertToInteger("LXXX");
 		assertEquals("LXXX should be 80", 80, num);
 	}
-
+	
+	@Test
+	public void romanNumerals_MCMLXXXIV() {
+		RomanNumerals rn = new RomanNumerals();
+		int num = rn.convertToInteger("MCMLXXXIV");
+		assertEquals("MCMLXXXIV should be 1984", 1984, num);
+	}
+	
+	@Test
+	public void romanNumerals_MMXIV() {
+		RomanNumerals rn = new RomanNumerals();
+		int num = rn.convertToInteger("MMXIV");
+		assertEquals("MMXIV should be 2014", 2014, num);
+	}
 }

@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -6,21 +5,20 @@ public class RomanNumerals {
 	public int convertToInteger(String romanNum) {
 		int finalNum = 0;
 		int num = 0;
-		int prevNum = 0;
 		
 		if (validateString(romanNum)) {
-			for (int i = 0; i < romanNum.length(); i++) {
-				prevNum = num;
-				num = convertCharacter(romanNum, i);
-				
-				if ((num < prevNum) && (prevNum == 1 || prevNum == 10 || prevNum == 100)) {
+			int [] romanNumArr = convertToArray(romanNum);
+
+			for (int i = 0; i < romanNumArr.length; i++) {
+				num = convertCharacter(romanNum.charAt(i));
+				if ((i < romanNumArr.length-1 && num < romanNumArr[i+1])) {
 					// subtract
-					finalNum = num-prevNum;
+					finalNum = finalNum - romanNumArr[i];
 				} else {
-					finalNum = finalNum + num;
+					// add
+					finalNum = finalNum + romanNumArr[i];
 				}
 			}
-			
 			return finalNum;
 			
 		} else {
@@ -28,9 +26,16 @@ public class RomanNumerals {
 		}
 	}
 	
-	public int convertCharacter(String romanNum, int i) {
-		char c = romanNum.charAt(i);
-		switch (c) {
+	private int[] convertToArray(String romanNum) {
+		int[] romanArr = new int[romanNum.length()];
+		for (int i = 0; i < romanNum.length(); i++) {
+			romanArr[i] = convertCharacter(romanNum.charAt(i));
+		}
+		return romanArr;
+	}
+	
+	public int convertCharacter(char romanNum) {
+		switch (romanNum) {
 		    case 'M':
 		        return 1000;
 		    case 'D':
@@ -67,7 +72,7 @@ public class RomanNumerals {
 	
 	public boolean validateRepeats(String romanNum) {
 		boolean isValid = true;
-
+		
 		if (romanNum.contains("IIII") || romanNum.contains("XXXX") || romanNum.contains("CCCC") || romanNum.contains("MMMM")) {
 			isValid = false;
 		}
@@ -77,16 +82,5 @@ public class RomanNumerals {
 		}
 
 		return isValid;
-	}
-
-	
-	public ArrayList<String> convertToList(String romanNum) {
-		ArrayList<String> charList  = new ArrayList<String>();
-		return charList;
-	}
-	
-	public int countI(String romanNum) {
-		int i = romanNum.split("I",-1).length-1;
-		return i;
 	}
 }
